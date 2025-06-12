@@ -143,47 +143,48 @@ export async function POST(request: NextRequest) {
         description: taskDescription,
         priority: 2, // Normal priority
         tags: ['quest-application', 'candidate'],
-        custom_fields: [
-          // Basic Info
-          {
-            id: process.env.CLICKUP_FIELD_ID_FIRST_NAME,
-            value: data.basicInfo.firstName
-          },
-          {
-            id: process.env.CLICKUP_FIELD_ID_LAST_NAME,
-            value: data.basicInfo.lastName
-          },
-          {
-            id: process.env.CLICKUP_FIELD_ID_EMAIL,
-            value: data.basicInfo.email
-          },
-          {
-            id: process.env.CLICKUP_FIELD_ID_PORTFOLIO,
-            value: data.basicInfo.portfolio
-          },
-          // Ratings (numeric fields)
-          {
-            id: process.env.CLICKUP_FIELD_ID_RATING_REACT,
-            value: data.technicalSkills.frontendRating
-          },
-          {
-            id: process.env.CLICKUP_FIELD_ID_RATING_DB,
-            value: data.technicalSkills.backendRating
-          },
-          {
-            id: process.env.CLICKUP_FIELD_ID_RATING_AI,
-            value: data.systemDesign.scalabilityRating
-          },
-          {
-            id: process.env.CLICKUP_FIELD_ID_RATING_EDGE,
-            value: data.technicalSkills.devOpsRating
-          },
-          // Other fields
-          {
-            id: process.env.CLICKUP_FIELD_ID_SUPERPOWER,
-            value: data.innovation.innovationExample
-          }
-        ].filter(field => field.id && field.value !== undefined && field.value !== '')
+        // Temporarily disable custom fields until correct field IDs are configured
+        // custom_fields: [
+        //   // Basic Info
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_FIRST_NAME,
+        //     value: data.basicInfo.firstName
+        //   },
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_LAST_NAME,
+        //     value: data.basicInfo.lastName
+        //   },
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_EMAIL,
+        //     value: data.basicInfo.email
+        //   },
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_PORTFOLIO,
+        //     value: data.basicInfo.portfolio
+        //   },
+        //   // Ratings (numeric fields)
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_RATING_REACT,
+        //     value: data.technicalSkills.frontendRating
+        //   },
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_RATING_DB,
+        //     value: data.technicalSkills.backendRating
+        //   },
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_RATING_AI,
+        //     value: data.systemDesign.scalabilityRating
+        //   },
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_RATING_EDGE,
+        //     value: data.technicalSkills.devOpsRating
+        //   },
+        //   // Other fields
+        //   {
+        //     id: process.env.CLICKUP_FIELD_ID_SUPERPOWER,
+        //     value: data.innovation.innovationExample
+        //   }
+        // ].filter(field => field.id && field.value !== undefined && field.value !== '')
       }),
     });
 
