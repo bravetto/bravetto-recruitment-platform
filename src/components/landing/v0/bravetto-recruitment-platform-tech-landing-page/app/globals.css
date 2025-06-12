@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove theme-specific CSS variables as Bravetto page has its own */
+/* Keep any other global styles you might need */
+
+@layer base {
+  * {
+    @apply border-border; /* This might conflict if Bravetto CSS also defines border for *; consider removing or scoping */
+  }
+  /* body styles are now primarily handled by bravetto.css */
+}
