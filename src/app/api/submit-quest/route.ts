@@ -52,9 +52,10 @@ interface QuestFormData {
 export async function POST(request: NextRequest) {
   try {
     const data: QuestFormData = await request.json();
+    console.log('Received quest data:', JSON.stringify(data, null, 2));
     
-    // Validate required fields
-    if (!data.basicInfo.firstName || !data.basicInfo.lastName || !data.basicInfo.email) {
+    // Validate required fields - data is already the parsed body
+    if (!data.basicInfo?.firstName || !data.basicInfo?.lastName || !data.basicInfo?.email) {
       return NextResponse.json(
         { error: 'First name, last name, and email are required' },
         { status: 400 }
@@ -127,6 +128,8 @@ export async function POST(request: NextRequest) {
 ---
 *Application submitted on: ${new Date().toLocaleString()}*
 `;
+
+    console.log('Creating ClickUp task:', taskName);
 
     // Create task in ClickUp
     const clickUpResponse = await fetch(`https://api.clickup.com/api/v2/list/${clickUpListId}/task`, {
