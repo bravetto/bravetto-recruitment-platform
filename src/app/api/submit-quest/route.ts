@@ -141,7 +141,6 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         name: taskName,
         description: taskDescription,
-        status: 'open', // You can customize this based on your ClickUp workflow
         priority: 2, // Normal priority
         tags: ['quest-application', 'candidate'],
         custom_fields: [
@@ -197,10 +196,11 @@ export async function POST(request: NextRequest) {
     }
 
     const clickUpTask = clickUpResponse.ok ? await clickUpResponse.json() : null;
+    console.log('ClickUp task created:', clickUpTask?.id || 'Failed');
 
     // Send notification webhook if configured
     const webhookUrl = process.env.NOTIFICATION_WEBHOOK_URL;
-    if (webhookUrl) {
+    if (webhookUrl && webhookUrl.startsWith('http')) {
       try {
         await fetch(webhookUrl, {
           method: 'POST',
