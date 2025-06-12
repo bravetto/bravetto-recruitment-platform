@@ -47,6 +47,32 @@ export default function Home() {
     }
   }
 
+  const handleModalSubmit = async (formData: any) => {
+    try {
+      const response = await fetch('/api/submit-quest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to submit application')
+      }
+
+      const result = await response.json()
+      console.log('Quest submitted successfully:', result)
+      
+      // The modal will handle showing the thank you message
+      // We don't need to do anything else here
+    } catch (error) {
+      console.error('Error submitting quest:', error)
+      throw error // Re-throw to let the modal handle the error state
+    }
+  }
+
   const handleStartLiveDemo = () => {
     const appIdeaInput = document.getElementById('appIdea') as HTMLInputElement
     if (!appIdeaInput || !appIdeaInput.value.trim()) {
@@ -305,6 +331,7 @@ export default function Home() {
       <BravettoQuestModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        onSubmit={handleModalSubmit}
       />
     </>
   )
