@@ -1,8 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { BravettoQuestModal } from '@/components/shared/Modal/BravettoQuestModal'
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
       <div className="relative">
@@ -48,8 +51,19 @@ export default function Home() {
               </p>
             </div>
 
+            {/* Start Quest Button */}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+            >
+              Start Your Quest
+            </button>
+
             {/* Modal Component */}
-            <BravettoQuestModal />
+            <BravettoQuestModal 
+              isOpen={isModalOpen} 
+              onClose={() => setIsModalOpen(false)} 
+            />
 
             <div className="mt-12 text-sm text-gray-500">
               <p>© 2024 Bravetto Inc. All rights reserved.</p>
