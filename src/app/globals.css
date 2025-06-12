@@ -78,6 +78,17 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
+  /* === Bravetto Theme Variables === */
+  --bravetto-primary: #00ff88;
+  --bravetto-secondary: #ff00ff;
+  --bravetto-accent: #00ffff;
+  --bravetto-dark: #0a0a0a;
+  --bravetto-darker: #050505;
+  --bravetto-light: #ffffff;
+  --bravetto-gradient-1: linear-gradient(135deg, #00ff88 0%, #00ffff 100%);
+  --bravetto-gradient-2: linear-gradient(135deg, #ff00ff 0%, #00ff88 100%);
+  --bravetto-gradient-3: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+
   /* === V0 Landing Theme Variables (prefixed) === */
   --v0-landing-background: 0 0% 100%;
   --v0-landing-foreground: 0 0% 3.9%;

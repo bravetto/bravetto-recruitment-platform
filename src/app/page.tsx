@@ -73,6 +73,12 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Debug: Check if CSS variables are loaded
+  useEffect(() => {
+    const styles = getComputedStyle(document.documentElement)
+    console.log('Bravetto Primary Color:', styles.getPropertyValue('--bravetto-primary'))
+  }, [])
+
   return (
     <>
       <div id="bravetto-landing">
