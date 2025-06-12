@@ -1,76 +1,107 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import HeroSection from '@/components/bravetto/hero-section'
+import MissionSection from '@/components/bravetto/mission-section'
+import ExecutiveSection from '@/components/bravetto/executive-section'
+import OpenRolesSection from '@/components/bravetto/open-roles-section'
+import CultureSection from '@/components/bravetto/culture-section'
+import TimelineSection from '@/components/bravetto/timeline-section'
+import ChallengeSection from '@/components/bravetto/challenge-section'
+import FinalCTASection from '@/components/bravetto/final-cta-section'
+import BravettoFooter from '@/components/bravetto/bravetto-footer'
 import { BravettoQuestModal } from '@/components/shared/Modal/BravettoQuestModal'
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalContext, setModalContext] = useState<{ role?: string } | null>(null)
+  const particlesRef = useRef<HTMLDivElement>(null)
+
+  const handleJoinRevolution = (event?: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if (event) event.preventDefault()
+    setModalContext(null)
+    setIsModalOpen(true)
+  }
+
+  const handleApplyForRole = (role: string) => {
+    setModalContext({ role })
+    setIsModalOpen(true)
+  }
+
+  const handleChallengeClick = (event?: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    if (event) event.preventDefault()
+    setModalContext({ role: 'challenge' })
+    setIsModalOpen(true)
+  }
+
+  const handleLearnMission = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    const missionSection = document.getElementById('mission')
+    if (missionSection) {
+      missionSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const handleStartLiveDemo = () => {
+    // Live demo functionality can be added here
+    console.log('Starting live demo...')
+  }
+
+  // Create floating particles
+  useEffect(() => {
+    function createParticles() {
+      const particlesContainer = particlesRef.current
+      if (!particlesContainer) return
+      particlesContainer.innerHTML = "" // Clear existing particles
+      
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement("div")
+        particle.className = "particle"
+        particle.style.left = Math.random() * 100 + "%"
+        particle.style.animationDelay = Math.random() * 15 + "s"
+        particle.style.animationDuration = 15 + Math.random() * 10 + "s"
+        particlesContainer.appendChild(particle)
+      }
+    }
+
+    createParticles()
+    
+    // Recreate particles on window resize
+    const handleResize = () => createParticles()
+    window.addEventListener('resize', handleResize)
+    
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
-      <div className="relative">
-        {/* Animated background particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -inset-10 opacity-50">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  animationDuration: `${3 + Math.random() * 4}s`
-                }}
-              >
-                <div className="w-2 h-2 bg-purple-400 rounded-full blur-sm" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Main content */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-          <div className="text-center space-y-8 max-w-4xl mx-auto">
-            <h1 className="text-6xl md:text-8xl font-bold text-white">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                Bravetto
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
-              Join the elite team building the future of AI-powered development
-            </p>
-
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-semibold text-white">
-                Are You Ready for the Challenge?
-              </h2>
-              <p className="text-lg text-gray-400">
-                We're looking for exceptional developers who can push boundaries
-              </p>
-            </div>
-
-            {/* Start Quest Button */}
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              Start Your Quest
-            </button>
-
-            {/* Modal Component */}
-            <BravettoQuestModal 
-              isOpen={isModalOpen} 
-              onClose={() => setIsModalOpen(false)} 
-            />
-
-            <div className="mt-12 text-sm text-gray-500">
-              <p>© 2024 Bravetto Inc. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
+    <>
+      <div id="bravetto-landing">
+        {/* Particles Background */}
+        <div className="particles" ref={particlesRef}></div>
+        
+        <HeroSection
+          onStartLiveDemo={handleStartLiveDemo}
+          onJoinRevolution={handleJoinRevolution}
+          onLearnMission={handleLearnMission}
+        />
+        <MissionSection />
+        <ExecutiveSection />
+        <OpenRolesSection 
+          onChallengeClick={handleChallengeClick}
+          onApplyForRole={handleApplyForRole}
+        />
+        <CultureSection />
+        <TimelineSection />
+        <ChallengeSection onRequestChallenge={handleChallengeClick} />
+        <FinalCTASection onJoinRevolution={handleJoinRevolution} />
+        <BravettoFooter />
       </div>
-    </main>
+
+      {/* Modal Component */}
+      <BravettoQuestModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+    </>
   )
 }
